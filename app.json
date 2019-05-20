@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "WIT",
-    "slug": "WIT",
+    "name": "WIT Mobile Test",
+    "description": "WIT. Indonesia Test Mobile Developer.",
+    "slug": "wit-mobile-test",
+    "scheme": "witmobiletest",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -23,7 +25,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cecepaprilianto.witmobiletest"
+    },
+    "android": {
+      "package": "com.cecepaprilianto.witmobiletest"
     }
   }
 }
