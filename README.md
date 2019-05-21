@@ -1,3 +1,6 @@
+# Demo
+Google Play Store [Download](https://play.google.com/store/apps/details?id=com.cecepaprilianto.witmobiletest)
+
 # Installation
 WIT. Indonesia Test Mobile Developer.
 React Native with Expo tools
