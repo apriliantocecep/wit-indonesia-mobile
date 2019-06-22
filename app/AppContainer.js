@@ -1,7 +1,9 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { FontAwesome , EvilIcons, Ionicons, Entypo, MaterialCommunityIcons, MaterialIcons, Foundation, AntDesign } from '@expo/vector-icons';
+import { connect } from "react-redux";
+import { fetchCartItems } from "./actions/cart";
 console.disableYellowBox = true;
 
 function cacheImages(images) {
@@ -24,7 +26,21 @@ class AppContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchCartItemsAsync();
+    // this.removeCartItemsAsync();
+  }
+
+  fetchCartItemsAsync = async () => {
+    const items = await AsyncStorage.getItem('items');
+    const itemsparsed = JSON.parse(items);
+
+    this.props.fetchCartItems(itemsparsed ? itemsparsed: []);
+    // console.log(itemsparsed);
     
+  }
+
+  removeCartItemsAsync = async () => {
+    await AsyncStorage.removeItem('items');
   }
 
   render() {
@@ -72,4 +88,14 @@ class AppContainer extends React.Component {
   };
 }
 
-export default AppContainer;
+const mapStateToProps = state => {
+  return {
+    cart: state.cart
+  }
+};
+
+mapDispatchToProps = dispatch => ({
+  fetchCartItems: items => dispatch(fetchCartItems(items))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

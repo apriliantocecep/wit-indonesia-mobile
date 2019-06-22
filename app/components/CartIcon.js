@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     // borderRadius: 3,
     // borderWidth: borderWidth,
     borderColor: '#ccc',
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
   },
   buttonCartIcon: {
     color: '#333'

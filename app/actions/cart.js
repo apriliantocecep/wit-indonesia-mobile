@@ -9,3 +9,8 @@ export const removeItem = (product) => ({
   type: actionType.REMOVE_FROM_CART,
   payload: product
 });
+
+export const fetchCartItems = (items) => ({
+  type: actionType.FETCH_CART,
+  payload: items
+});

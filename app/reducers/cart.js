@@ -14,6 +14,11 @@ const cart = (state = initialState, action) => {
       return Object.assign({}, state, {
         items: state.items.filter(item => item.idProduct !== action.payload.idProduct),
       });
+
+    case actionType.FETCH_CART:
+      return Object.assign({}, state, {
+        items: action.payload,
+      });
   
     default:
       return state;

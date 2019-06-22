@@ -42,7 +42,7 @@ class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const {params = {}} = navigation.state;
     return {
-      headerRight: <CartIcon onPress={() => alert('Cart')} />
+      headerRight: <CartIcon onPress={() => navigation.openDrawer()} />
     }
   }
 
@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: screenWidth-40,
     borderRadius: 5,
+    backgroundColor: '#ddd',
   },
 
   renderContainer: {
@@ -196,6 +197,7 @@ const styles = StyleSheet.create({
     width: (screenWidth/NUM_COLUMN)-20,
     height: (screenWidth/NUM_COLUMN)-20,
     borderRadius: 5,
+    backgroundColor: '#ddd',
   },
   itemText: {
     paddingVertical: 7,

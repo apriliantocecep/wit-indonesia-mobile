@@ -38,7 +38,7 @@ class CategoryScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const {params = {}} = navigation.state;
     return {
-      headerRight: <CartIcon onPress={() => alert('Cart')} />
+      headerRight: <CartIcon onPress={() => navigation.openDrawer()} />
     }
   }
 

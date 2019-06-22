@@ -1,6 +1,6 @@
 import React from 'react';
 import { screens } from "../constants";
-import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer, createDrawerNavigator } from 'react-navigation';
 import { Ionicons } from "@expo/vector-icons";
 
 // screens
@@ -9,6 +9,7 @@ import CategoryScreen from "../screens/Category/CategoryScreen";
 import SearchScreen from "../screens/Search/SearchScreen";
 import ProductScreen from "../screens/Product/ProductScreen";
 import ProductDetail from "../screens/ProductDetail";
+import CartScreen from "../screens/Cart";
 
 const HomeStackNavigator = createStackNavigator({
   [screens.HomeStack]: {
@@ -108,4 +109,16 @@ const MainStackNavigator = createStackNavigator({
   initialRouteName: screens.MainTab
 });
 
-export default createAppContainer(MainStackNavigator);
+const MainDrawerNavigator = createDrawerNavigator({
+  [screens.DrawerTabs]: {
+    screen: MainStackNavigator
+  },
+  [screens.MainDrawer]: {
+    screen: HomeScreen
+  }
+}, {
+  drawerPosition: 'right',
+  contentComponent: CartScreen
+});
+
+export default createAppContainer(MainDrawerNavigator);

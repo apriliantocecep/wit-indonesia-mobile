@@ -11,6 +11,7 @@ import {
   Animated,
   Alert,
   Share,
+  AsyncStorage,
 } from 'react-native';
 import { LinearGradient } from "expo";
 import _ from "lodash";
@@ -18,7 +19,7 @@ import Swiper from "react-native-swiper";
 import { Ionicons } from "@expo/vector-icons";
 import { screenHeight, screenWidth, borderWidth, statusBarHeight } from "../../constants";
 import { convertToRupiah } from "../../helpers";
-import { ButtonIcon } from "../../components";
+import { ButtonIcon, CartIcon } from "../../components";
 
 // fake data
 import { product } from "./data";
@@ -72,6 +73,7 @@ class ProductDetail extends Component {
       product: navigation.getParam('item'),
       // product: product,
       readMore: false,
+      data: [],
     };
 
     this.scrollYAnimatedValue = new Animated.Value(0);
@@ -115,8 +117,23 @@ class ProductDetail extends Component {
 
   onPressAddToBag = () => {
     const { product } = this.state;
-    
+
     this.props.addItemToCart(product);
+  }
+
+  onPressAddToBagAsync = async () => {
+    try {
+      const { product } = this.state;
+      this.props.addItemToCart(product);
+
+      const data = this.props.cart.items;
+      data.push(product);
+
+      await AsyncStorage.setItem('items', JSON.stringify(data));
+
+    } catch (error) {
+      console.log('Error add to cart');
+    }
   }
 
   render() {
@@ -218,17 +235,18 @@ class ProductDetail extends Component {
             }}>
               <ButtonIcon icon={<Ionicons name="md-share" size={25} style={{color: '#333'}} />} onPress={this.onPressShareAsync} />
               <ButtonIcon icon={<Ionicons name="md-more" size={25} style={{color: '#333'}} />} onPress={this.onPressOptions} />
+              <CartIcon onPress={() => this.props.navigation.openDrawer()} />
             </View>
           </LinearGradient>
         </Animated.View>
 
         <View style={styles.bottomContainer}>
-          <TouchableOpacity disabled={disabled} activeOpacity={0.8} onPress={this.onPressAddToBag} style={[styles.buttonBagContainer, disabled && styles.buttonBagDisabled]}>
+          <TouchableOpacity disabled={disabled} activeOpacity={0.8} onPress={this.onPressAddToBagAsync} style={[styles.buttonBagContainer, disabled && styles.buttonBagDisabled]}>
             <Ionicons name="ios-add-circle-outline" size={25} style={styles.buttonBagIcon} />
             <Text numberOfLines={1} style={styles.buttonBagText}>Add To Bag</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity activeOpacity={0.8} onPress={() => alert('Cart')} style={styles.buttonCartContainer}>
+          <TouchableOpacity activeOpacity={0.8} onPress={() => this.props.navigation.openDrawer()} style={styles.buttonCartContainer}>
             {this.props.cart.items.length > 0 && (
               <View style={styles.buttonCartBadgeContainer}>
                 <Text numberOfLines={1} style={styles.buttonCartBadgeText}>{this.props.cart.items.length}</Text>
